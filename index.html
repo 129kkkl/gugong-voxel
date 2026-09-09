@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>故宫 · 体素紫禁城</title>
+  <style>
+    html, body { margin: 0; padding: 0; overflow: hidden; background: #1a1410; }
+    #app { position: fixed; inset: 0; }
+    canvas { display: block; }
+
+    .panel {
+      position: fixed; left: 14px; top: 14px; z-index: 10;
+      color: #f3e9d2; font-family: "Microsoft YaHei", "PingFang SC", sans-serif;
+      background: rgba(24, 16, 10, 0.62); border: 1px solid rgba(212, 175, 55, 0.35);
+      border-radius: 10px; padding: 12px 16px 10px; backdrop-filter: blur(6px);
+      user-select: none; max-width: 240px;
+    }
+    .panel h1 { margin: 0 0 2px; font-size: 18px; letter-spacing: 4px; color: #f5d67a; font-weight: 600; }
+    .panel .sub { font-size: 11px; color: #d8c49a; letter-spacing: 1px; margin-bottom: 8px; }
+    .panel .row { font-size: 12px; line-height: 1.7; color: #e8dcc0; }
+    .panel .dot { display: inline-block; width: 8px; height: 8px; border-radius: 2px; margin-right: 6px; vertical-align: 1px; }
+    .panel .hint { margin-top: 8px; font-size: 11px; color: #b7a67f; border-top: 1px solid rgba(212,175,55,.2); padding-top: 6px; }
+    .panel label { font-size: 11px; color: #d8c49a; cursor: pointer; display: inline-flex; align-items: center; gap: 4px; margin-top: 6px; }
+    .views { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 8px; }
+    .views button {
+      font-size: 11px; color: #f3e9d2; background: rgba(212,175,55,.16);
+      border: 1px solid rgba(212,175,55,.45); border-radius: 5px;
+      padding: 2px 8px 3px; cursor: pointer; letter-spacing: 1px;
+      font-family: inherit;
+    }
+    .views button:hover { background: rgba(212,175,55,.32); }
+
+    #fps {
+      position: fixed; right: 14px; top: 14px; z-index: 10;
+      color: #9fe08a; font-family: Consolas, monospace; font-size: 12px;
+      background: rgba(24,16,10,.55); border: 1px solid rgba(212,175,55,.3);
+      padding: 4px 10px; border-radius: 6px; user-select: none;
+    }
+
+    .blabel {
+      position: fixed; z-index: 5; pointer-events: none;
+      font-family: "Microsoft YaHei", "PingFang SC", sans-serif;
+      font-size: 12px; color: #fff7e0; letter-spacing: 2px;
+      background: rgba(40, 22, 8, 0.55); border: 1px solid rgba(212, 175, 55, 0.45);
+      padding: 1px 8px 2px; border-radius: 999px;
+      transform: translate(-50%, -130%); white-space: nowrap;
+      text-shadow: 0 1px 2px rgba(0,0,0,.6);
+      transition: opacity .25s;
+    }
+
+    #loading {
+      position: fixed; inset: 0; z-index: 50; display: flex; align-items: center; justify-content: center;
+      background: #17100a; color: #f5d67a; font-family: "Microsoft YaHei", sans-serif;
+      font-size: 20px; letter-spacing: 8px; transition: opacity .8s; pointer-events: none;
+    }
+  </style>
+</head>
+<body>
+  <div id="app"></div>
+
+  <div class="panel">
+    <h1>紫禁城 · 体素</h1>
+    <div class="sub">故宫建筑群 · 中轴对称 · 晨昏光影</div>
+    <div class="row"><span class="dot" style="background:#e3b23c"></span>黄色琉璃瓦</div>
+    <div class="row"><span class="dot" style="background:#9b2c22"></span>朱红宫墙立柱</div>
+    <div class="row"><span class="dot" style="background:#e9e4d8"></span>汉白玉台基</div>
+    <label><input type="checkbox" id="toggle-labels" checked /> 显示建筑名称</label>
+    <label><input type="checkbox" id="toggle-rotate" checked /> 缓慢环绕</label>
+    <div class="views">
+      <button data-view="home">全景</button>
+      <button data-view="taihe">太和殿</button>
+      <button data-view="wumen">午门</button>
+      <button data-view="garden">御花园</button>
+      <button data-view="north">内朝</button>
+    </div>
+    <div class="hint">拖拽旋转 · 滚轮缩放 · 右键平移</div>
+  </div>
+
+  <div id="fps">-- fps</div>
+  <div id="labels"></div>
+  <div id="loading">紫 禁 城</div>
+
+  <script type="module" src="/src/main.js"></script>
+</body>
+</html>
